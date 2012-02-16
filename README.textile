@@ -1,0 +1,30 @@
+h2. Usage example
+
+Here is a simple example to retrieve periodically data from a server and refresh the graph:
+
+<pre>
+<code>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            function myRetrieveSamplesAndCreateGraphs(uri) {
+                getDataAndCreateOrUpdateGraph(url, "myCallback");
+            }
+
+            function myCallback(payload) {
+                var data = $.parseJSON(payload).data;
+                createOrUpdateGraph(data);
+            }
+
+            var uri = "http://127.0.0.1:8080/rest/1.0/data";
+
+            // Setup the UI
+            initializeUI();
+
+            // Refresh the graph periodically
+            window.refreshIntervalId = setInterval(function() {
+                myRetrieveSamplesAndCreateGraphs(uri);
+            }, 1000);
+        });
+    </script>
+</code>
+</pre>
