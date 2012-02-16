@@ -1,0 +1,76 @@
+#modal {
+    display: none;
+}
+
+#shiftLeft {
+    cursor: pointer;
+}
+
+#shiftRight {
+    cursor: pointer;
+}
+
+#zoomIn {
+    cursor: pointer;
+}
+
+#zoomOut {
+    cursor: pointer;
+}
+
+#topbar {
+    margin-bottom: 50px;
+}
+
+#chart_container {
+    height: 500px;
+}
+
+#y_axis {
+    width: 40px;
+    float: left;
+    height: 500px;
+}
+
+#chart {
+    float: left;
+}
+
+#slider {
+    /* y axis */
+    margin-left: 40px;
+    margin-top: 10px;
+}
+
+#legend {
+    background-color: white;
+    margin-left: 0;
+    padding: 0;
+    left: 0;
+}
+
+#legend .label {
+    color: #404040;
+    background-color: white;
+    text-transform: none;
+}
+
+#legend .action {
+    color: black;
+    opacity: 0.5;
+}
+
+#legend ul {
+    padding: 0;
+}
+
+/* See http://shutterstock.github.com/rickshaw/examples/css/extensions.css */
+#side_panel label {
+    display: inline-block;
+    font-size: 10px;
+    color: #808080;
+    background-repeat: no-repeat;
+    margin: 0 4px;
+    cursor: pointer;
+    width: 54px;
+}
