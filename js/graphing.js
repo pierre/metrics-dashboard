@@ -1,7 +1,7 @@
 /*
  * Refresh an existing graph
  *
- * @param {Array}       data    Data (in the form [{x:, y:}, {}, ...]) sent from the server
+ * @param {Array}       data    Data (in the form [{x:, y:}, {}, ...]) sent from the server (assumed ordered)
  * @param {Integer}     graphNb Graph number
  */
 function refreshGraph(data, graphNb) {
@@ -24,9 +24,20 @@ function refreshGraph(data, graphNb) {
     // Concat the non-overlapping series
     var newSeries = currentSeries.concat(data);
 
-    // Make a moving window by dropping a fourth of the data points
+    // Make a moving window by dropping data points if needed
+    var to = newSeries[newSeries.length - 1].x;
+    var from = newSeries[0].x;
     // TODO: how to configure?
-    newSeries.splice(0, newSeries.length / 4);
+    var delta = 60;
+    var toDelete = 0;
+    for (var i = 0; i < newSeries.length; i++) {
+        if (newSeries[i].x > to - delta) {
+            break;
+        }
+        toDelete++;
+    }
+    newSeries.splice(0, toDelete);
+
     if (newSeries.length > 0) {
         // Store the new data points and update the graph
         console.log("Updating graph with " + newSeries.length + " data points");
