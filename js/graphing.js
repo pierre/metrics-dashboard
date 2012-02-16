@@ -2,10 +2,10 @@
  * Refresh an existing graph
  *
  * @param {Array}       data    Data (in the form [{x:, y:}, {}, ...]) sent from the server
- * @param {Integer}     i       Graph number
+ * @param {Integer}     graphNb Graph number
  */
-function refreshGraph(data, i) {
-    var currentSeries = window.jansky.timeseries[i];
+function refreshGraph(data, graphNb) {
+    var currentSeries = window.jansky.timeseries[graphNb].data;
 
     // Find an eventual overlap
     var firstOverlappingPoint = -1;
@@ -24,12 +24,14 @@ function refreshGraph(data, i) {
     // Concat the non-overlapping series
     var newSeries = currentSeries.concat(data);
 
-    // Make a moving window by dropping a third of the data points
+    // Make a moving window by dropping a fourth of the data points
     // TODO: how to configure?
-    newSeries.splice(0, newSeries.length / 3);
-
-    // Store the new data points and update the graph
-    window.jansky.timeseries[i].data = newSeries;
+    newSeries.splice(0, newSeries.length / 4);
+    if (newSeries.length > 0) {
+        // Store the new data points and update the graph
+        console.log("Updating graph with " + newSeries.length + " data points");
+        window.jansky.timeseries[graphNb].data = newSeries;
+    }
     window.jansky.graph.update();
 }
 
