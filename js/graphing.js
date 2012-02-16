@@ -62,6 +62,8 @@ function addGraph(data, legend) {
  * The graph object will be stored into window.jansky.graph.
  */
 function redrawGraphs() {
+    console.log("Redrawing the entire Graph");
+
     $("#chart").children().remove();
     $("#legend").children().remove();
     $("#y_axis").children().remove();
