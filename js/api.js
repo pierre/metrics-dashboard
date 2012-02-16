@@ -50,15 +50,19 @@ function createOrUpdateGraph(data) {
         return;
     }
 
-    if (window.jansky.timeseries.length == 0) {
-        // TODO - legend?
-        console.log("Adding new graph");
-        addGraph(data, 'TODO-leged');
-    } else {
-        // TODO - graph number?
-        var graphNb = 0
-        console.log("Refreshing graph nb " + graphNb);
-        refreshGraph(data, graphNb);
+    try {
+        if (window.jansky.timeseries.length == 0) {
+            // TODO - legend?
+            console.log("Adding new graph");
+            addGraph(data, 'TODO-leged');
+        } else {
+            // TODO - graph number?
+            var graphNb = 0
+            console.log("Refreshing graph nb " + graphNb);
+            refreshGraph(data, graphNb);
+        }
+    } catch (e) {
+        console.log("Error rending graph: " + e);
     }
 
     exitFromCallback();
