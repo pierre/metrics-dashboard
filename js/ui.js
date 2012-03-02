@@ -39,9 +39,25 @@ function initializeUI() {
     // Setup the error messages alert for Ajax calls
     $('#errorDiv')
         .hide()  // hide it initially
-        .ajaxError(function(event, request, settings) {
+        .ajaxError(function(event, jqXHR, settings) {var message;
+            if (jqXHR.status === 0) {
+                message = 'Unable to connect to the remote host.';
+            } else if (jqXHR.status == 404) {
+                message = 'Requested resource not found [404].';
+            } else if (jqXHR.status == 500) {
+                message = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+                message = 'Unable to parse the JSON response.';
+            } else if (exception === 'timeout') {
+                message = 'Connection timeout.';
+            } else if (exception === 'abort') {
+                message = 'Ajax request aborted.';
+            } else {
+                message = 'Uncaught Error. ' + jqXHR.responseText;
+            }
+
             $(this).show();
-            $(this).append("<p>Error requesting " + settings.url + ", error is:" + request.responseText + "<p>");
+            $(this).append("<p>Error requesting " + settings.url + ". " + message + "<p>");
             event.preventDefault();
         });
 }

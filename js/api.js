@@ -34,7 +34,9 @@ function getDataAndCreateOrUpdateGraph(uri, callback, opts) {
         dataType: "jsonp",
         cache : false,
         jsonp : "callback",
-        jsonpCallback: callback
+        jsonpCallback: callback,
+        // Hacky error handling for JSONP requests
+        timeout : 7000
     }
 
     if (!(opts === undefined)) {
