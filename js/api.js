@@ -11,8 +11,9 @@
  *
  * @param {String}  uri             The server URI, e.g. http://127.0.0.1:8080
  * @param {String}  callback        The callback function to parse the data. This callback must return by calling createOrUpdateGraph(data)
+ * @param {Object}  opts            Optional configuration options for jQuery's ajax call
  */
-function getDataAndCreateOrUpdateGraph(uri, callback) {
+function getDataAndCreateOrUpdateGraph(uri, callback, opts) {
     // Take the lock - it will be released once the data is retrieved and rendered (see createOrUpdateGraph)
     if (window.jansky.graph_lock > 0) {
         setTimeout(function() {
@@ -22,20 +23,29 @@ function getDataAndCreateOrUpdateGraph(uri, callback) {
         return;
     }
     window.jansky.graph_lock = 1;
-    console.log("Graph lock acquired");
+    //console.log("Graph lock acquired");
 
     // Update the permalink
     // TODO
     //addGraphToPermalink(kind, scale)
 
-    // Populate the data
-    $.ajax({
+    var ajax_opts = {
         url: uri,
         dataType: "jsonp",
         cache : false,
         jsonp : "callback",
         jsonpCallback: callback
-    });
+    }
+
+    if (!(opts === undefined)) {
+        for (var attrname in opts) {
+            ajax_opts[attrname] = opts[attrname];
+        }
+    }
+
+    // Populate the data
+    console.log("Calling " + ajax_opts.url);
+    $.ajax(ajax_opts);
 }
 
 /*
@@ -80,5 +90,5 @@ function exitFromCallback() {
 
     // Release the lock (acquired before calling the collector)
     window.jansky.graph_lock = 0;
-    console.log("Graph lock released");
+    //console.log("Graph lock released");
 }
